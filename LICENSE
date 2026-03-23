@@ -2,5 +2,5 @@ git init
 git add .
 git commit -m "Initial commit - ScanConcours"
 git branch -M main
-git remote add origin https://github.com/TON_USERNAME/ScanConcours.git
+git remote add origin https://github.com/lbarbrel/ScanConcours.git
 git push -u origin main
