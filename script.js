@@ -6,6 +6,28 @@ let currentUser = authToken ? { email: localStorage.getItem("scanconcours_email"
 
 
 
+
+function updateUserStatusUI() {
+  const el = document.getElementById("userStatus");
+  if (!el) return;
+
+  if (currentUser && currentUser.email) {
+    el.textContent = `Connecté : ${currentUser.email}`;
+  } else {
+    el.textContent = "Non connecté";
+  }
+}
+
+// Appel au chargement
+updateUserStatusUI();
+
+
+
+
+
+
+
+
 // Fake data – remplacée ensuite par votre backend
 const concoursData = [
   {
