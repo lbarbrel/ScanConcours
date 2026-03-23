@@ -1,7 +1,64 @@
-// ========================
-// 1. IMPORTS FIREBASE
-// ========================
+// ===============================
+// FIREBASE VIA CDN (VERSION WEB)
+// ===============================
 
+// Core Firebase SDK (obligatoire)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
+// Auth (identification email + mot de passe)
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+// Firestore (base de données)
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  doc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+// ===============================
+// CONFIGURATION PROJECT FIREBASE
+// ===============================
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAMcYRznOujjYqJLSw3RMW7D9a_it4mK7c",
+  authDomain: "scanconcours.firebaseapp.com",
+  projectId: "scanconcours",
+  storageBucket: "scanconcours.firebasestorage.app",
+  messagingSenderId: "956215608130",
+  appId: "1:956215608130:web:752f5e3b988c02a2ce7edb",
+  measurementId: "G-MFCR89YPZX"
+};
+
+// ===============================
+// INITIALISATION
+// ===============================
+
+const app = initializeApp(firebaseConfig);
+
+// Auth et Firestore côté frontend
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// Pas d’analytics sur GitHub Pages / site statique → on ne l’initialise pas
+console.log("Firebase initialisé ✔");
+``
+
+
+// ========================
+// IMPORTS FIREBASE
+// ========================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getAuth,
@@ -25,7 +82,7 @@ import {
 
 
 // ========================
-// 2. CONFIGURATION FIREBASE
+// CONFIGURATION FIREBASE
 // ========================
 const firebaseConfig = {
   apiKey: "AIzaSyAMcYRznOujjYqJLSw3RMW7D9a_it4mK7c",
@@ -43,41 +100,75 @@ const db = getFirestore(app);
 
 
 // ========================
-// 3. DONNÉES DEMO CONCOURS
+// DONNÉES CONCOURS
 // ========================
-// À terme, ces données viendront de ton scraper / backend
-window.concoursData = [
-  {
-    id: "c1",
-    titre: "Gagnez un voyage à New York",
-    typeGain: "voyage",
-    dateFin: "2026-04-20",
-    source: "ExempleSite",
-    url: "https://exemple.com/concours/voyage"
-  },
-  {
-    id: "c2",
-    titre: "100 coffrets beauté gratuits",
-    typeGain: "produits",
-    dateFin: "2026-03-30",
-    source: "BeautyClub",
-    url: "https://beautyclub.com/concours/coffrets"
-  },
-  {
-    id: "c3",
-    titre: "Bons d’achat de 50€ à gagner",
-    typeGain: "cash",
-    dateFin: "2026-05-10",
-    source: "PromoPlus",
-    url: "https://promoplus.fr/concours/bons-achat"
+import {
+  getFirestore,
+  collection,
+  getDocs,
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+// ========================
+// CHARGER LES CONCOURS
+// ========================
+async function loadConcoursFromFirestore() {
+  const snap = await getDocs(collection(db, "concours"));
+  const data = snap.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+  return data;
+}
+
+async function initConcoursPage(user) {
+  const listEl = document.getElementById("concoursList");
+  if (!listEl) return;
+
+  listEl.innerHTML = "Chargement des concours...";
+
+  try {
+    const concoursData = await loadConcoursFromFirestore();
+    window.concoursData = concoursData; // pour que favoris/gains puissent les réutiliser
+
+    if (concoursData.length === 0) {
+      listEl.innerHTML = "<p>Aucun concours pour le moment.</p>";
+      return;
+    }
+
+    listEl.innerHTML = "";
+
+    concoursData.forEach(c => {
+      const card = document.createElement("div");
+      card.className = "concours-card";
+
+      card.innerHTML = `
+        <h3>${c.titre}</h3>
+        <p><strong>Gain :</strong> ${c.type_gain || "—"}</p>
+        <p><strong>Fin :</strong> ${c.date_fin || "Non précisé"}</p>
+        <p><strong>Source :</strong> ${c.source_nom || "—"}</p>
+        <div class="actions">
+          ${c.url_officielle || "#"}Voir le concours</a>
+          <button class="btn-fav" data-id="${c.id}">☆</button>
+        </div>
+      `;
+
+      listEl.appendChild(card);
+    });
+
+    // on passe l'utilisateur connecté pour gérer l’étoile
+    bindFavoriteButtons(user);
+  } catch (e) {
+    console.error(e);
+    listEl.innerHTML = "<p>Erreur lors du chargement des concours.</p>";
   }
-];
+}
 
 
 // ========================
-// 4. HEADER & MENU MOBILE
+// HEADER & MENU MOBILE
 // ========================
-
 function initHeader() {
   const nav = document.querySelector(".nav");
   const navToggle = document.querySelector(".nav-toggle");
@@ -145,9 +236,8 @@ function initHeader() {
 
 
 // ========================
-// 5. AUTHENTIFICATION
+// AUTHENTIFICATION
 // ========================
-
 function initAuthForms() {
   // ---------- INSCRIPTION ----------
   const signupForm = document.getElementById("signupForm");
@@ -228,9 +318,8 @@ function initAuthForms() {
 
 
 // ========================
-// 6. FIRESTORE – FAVORIS & GAINS
+// FIRESTORE – FAVORIS & GAINS
 // ========================
-
 // ---- Favoris ----
 async function addFavoriteForUser(userUid, concoursId) {
   await addDoc(collection(db, "favorites"), {
@@ -276,9 +365,8 @@ async function loadGainsForUser(userUid) {
 
 
 // ========================
-// 7. PAGE CONCOURS (index)
+// PAGE CONCOURS (index)
 // ========================
-
 function initConcoursPage(user) {
   const listEl = document.getElementById("concoursList");
   if (!listEl) return;
@@ -337,9 +425,8 @@ function bindFavoriteButtons(user) {
 
 
 // ========================
-// 8. PAGE FAVORIS
+// PAGE FAVORIS
 // ========================
-
 async function initFavorisPage(user) {
   const favorisListEl = document.getElementById("favorisList");
   if (!favorisListEl) return;
@@ -378,9 +465,8 @@ async function initFavorisPage(user) {
 
 
 // ========================
-// 9. PAGE GAINS
+// PAGE GAINS
 // ========================
-
 async function initGainsPage(user) {
   const gainsListEl = document.getElementById("gainsList");
   if (!gainsListEl) return;
@@ -445,9 +531,8 @@ async function initGainsPage(user) {
 
 
 // ========================
-// 10. INIT GLOBALE
+// INIT GLOBALE
 // ========================
-
 document.addEventListener("DOMContentLoaded", () => {
   initHeader();
   initAuthForms();
