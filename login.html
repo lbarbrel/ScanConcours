@@ -1,53 +1,66 @@
 <!DOCTYPE html>
 <html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion – ScanConcours</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header moderne et responsive -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">ScanConcours</a>
 
-<!-- HEADER --> 
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo">ScanConcours</a>
+      <button class="nav-toggle" aria-label="Ouvrir le menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
 
-    <button class="nav-toggle" aria-label="Ouvrir le menu">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
+      <nav class="nav" data-open="false">
+        <a href="index.html">Concours</a>
+        <a href="favoris.html">Mes favoris</a>
+        <a href="gains.html">Mes gains</a>
+        <a href="login.html" id="nav-login">Connexion</a>
+        <a href="signup.html" id="nav-signup" class="nav-cta">Inscription</a>
+        <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
+      </nav>
+    </div>
+  </header>
 
-    <nav class="nav" data-open="false">
-      index.htmlConcours</a>
-      favoris.htmlMes favoris</a>
-      gains.htmlMes gains</a>
-      login.htmlConnexion</a>
-      signup.htmlInscription</a>
-      <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
-    </nav>
-  </div>
-</header>
+  <main class="page auth-page">
+    <section class="section">
+      <div class="container">
+        <div class="auth-card">
+          <h1>Connexion</h1>
+          <p class="auth-sub">Connectez-vous pour retrouver vos favoris et vos gains.</p>
 
-<!-- SDK Firebase (modules pour le navigateur) -->
-<script type="module"
+          <form id="loginForm" class="auth-form">
+            <div class="field">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" required placeholder="vous@example.com">
+            </div>
 
-<body class="auth-body">
+            <div class="field">
+              <label for="loginPassword">Mot de passe</label>
+              <input type="password" id="loginPassword" required placeholder="Votre mot de passe">
+            </div>
 
-  <div class="auth-card">
-    <h2>Connexion</h2>
-    <p class="auth-sub">Accédez à vos favoris et à vos gains.</p>
+            <button type="submit" class="btn-primary">Se connecter</button>
+            <p class="auth-message" id="loginMessage"></p>
+          </form>
 
-    <form id="loginForm">
-      <label>Email</label>
-      <input type="email" id="loginEmail" required>
+          <p class="auth-links">
+            Pas encore de compte ?
+            <a href="signup.html">Créer un compte</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
 
-      <label>Mot de passe</label>
-      <input type="password" id="loginPassword" required>
-
-      <button class="btn-primary" type="submit">Se connecter</button>
-      <p id="loginMessage" class="auth-message"></p>
-    </form>
-
-    <p class="auth-links">
-      Pas de compte ?
-      signup.htmlCréez-en un</a>
-    </p>
-  </div>
-
+  <!-- IMPORTANT : script en type module, c’est lui qui contient Firebase -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
