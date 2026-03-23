@@ -1,56 +1,59 @@
 <!DOCTYPE html>
 <html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Créer un compte – ScanConcours</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header moderne et responsive -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">ScanConcours</a>
 
+      <button class="nav-toggle" aria-label="Ouvrir le menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
 
-<!-- HEADER -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo">ScanConcours</a>
+      <nav class="nav" data-open="false">
+        <a href="index.html">Concours</a>
+        <a href="favoris.html">Mes favoris</a>
+        <a href="gains.html">Mes gains</a>
+        <a href="login.html" id="nav-login">Connexion</a>
+        <a href="signup.html" id="nav-signup" class="nav-cta">Inscription</a>
+        <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
+      </nav>
+    </div>
+  </header>
 
-    <button class="nav-toggle" aria-label="Ouvrir le menu">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
+  <main class="page auth-page">
+    <section class="section">
+      <div class="container">
+        <div class="auth-card">
+          <h1>Créer un compte</h1>
+          <p class="auth-sub">
+            Un compte vous permet de synchroniser vos favoris et vos gains sur tous vos appareils.
+          </p>
 
-    <nav class="nav" data-open="false">
-      index.htmlConcours</a>
-      favoris.htmlMes favoris</a>
-      gains.htmlMes gains</a>
-      login.htmlConnexion</a>
-      signup.htmlInscription</a>
-      <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
-    </nav>
-  </div>
-</header>
+          <form id="signupForm" class="auth-form">
+            <div class="field">
+              <label for="signupEmail">Email</label>
+              <input type="email" id="signupEmail" required placeholder="vous@example.com">
+            </div>
 
+            <div class="field">
+              <label for="signupPassword">Mot de passe</label>
+              <input type="password" id="signupPassword" required minlength="6" placeholder="Minimum 6 caractères">
+            </div>
 
-<!-- SDK Firebase (modules pour le navigateur) -->
-<script type="module"
+            <button type="submit" class="btn-primary">Créer mon compte</button>
+            <p class="auth-message" id="signupMessage"></p>
+          </form>
 
-  
-<body class="auth-body">
-
-  <div class="auth-card">
-    <h2>Créer un compte</h2>
-    <p class="auth-sub">Un compte synchronise vos favoris et vos gains.</p>
-
-    <form id="signupForm">
-      <label>Email</label>
-      <input type="email" id="signupEmail" required>
-
-      <label>Mot de passe</label>
-      <input type="password" id="signupPassword" minlength="8" required>
-
-      <button class="btn-primary" type="submit">Créer mon compte</button>
-      <p id="signupMessage" class="auth-message"></p>
-    </form>
-
-    <p class="auth-links">
-      Déjà un compte ?
-      login.htmlConnectez-vous</a>
-    </p>
-  </div>
-
-</body>
-</html>
+          <p class="auth-links">
+            Vous avez déjà un compte ?
+            <a href="login.html">Se connecter</a>
+          </p
