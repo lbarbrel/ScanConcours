@@ -7,25 +7,26 @@
   style.css
 </head>
 <body>
+  <!-- HEADER -->
 
-<!-- HEADER -->
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo">ScanConcours</a>
+  <main class="page">
+    <section class="section">
+      <div class="container">
+        <h1>Mes gains</h1>
+        <p class="sub">Suivez l’état de vos participations : gagné, en attente, perdu.</p>
 
-    <button class="nav-toggle" aria-label="Ouvrir le menu">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
+        <div class="gains-filters">
+          <button data-status="all" class="btn-chip active">Tous</button>
+          <button data-status="won" class="btn-chip">🎉 Gagné</button>
+          <button data-status="pending" class="btn-chip">⏳ En attente</button>
+          <button data-status="lost" class="btn-chip">❌ Perdu</button>
+        </div>
 
-    <nav class="nav" data-open="false">
-      index.htmlConcours</a>
-      favoris.htmlMes favoris</a>
-      gains.htmlMes gains</a>
-      login.htmlConnexion</a>
-      signup.htmlInscription</a>
-      <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
-    </nav>
-  </div>
-</header>
+        <div id="gainsList" class="gains-list"></div>
+      </div>
+    </section>
+  </main>
+
+  script.js
+</body>
+</html>
