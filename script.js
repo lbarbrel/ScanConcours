@@ -215,3 +215,23 @@ if (loginForm) {
       });
   });
 }
+
+
+
+
+
+
+
+
+
+
+const logoutBtn = document.getElementById("logoutBtn");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", () => {
+    authToken = null;
+    currentUser = null;
+    localStorage.removeItem("scanconcours_token");
+    localStorage.removeItem("scanconcours_email");
+    updateUserStatusUI();
+  });
+}
