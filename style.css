@@ -91,3 +91,73 @@ nav a:hover {
   background: #111827;
   color: white;
 }
+
+
+
+
+
+
+
+
+
+
+
+.section-auth {
+  background: #f3f4f6;
+}
+
+.auth-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.auth-form {
+  margin-top: 1rem;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.auth-form .field {
+  margin-bottom: 1rem;
+}
+
+.auth-form label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+  color: #4b5563;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+}
+
+.auth-form .btn-primary {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.auth-message {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.auth-message.error {
+  color: #b91c1c;
+}
+
+.auth-message.success {
+  color: #15803d;
+}
+
+/* Optionnel : état connecté dans le header */
+.user-status {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
