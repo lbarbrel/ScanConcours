@@ -592,4 +592,104 @@ function bindFavoriteButtons(user) {
 }
 
 
+async function initFavorisPage(user) {
+  const favorisListEl = document.getElementById("favorisList");
+  if (!favorisListEl) return;
+
+  favorisListEl.innerHTML = "Chargement des favoris...";
+
+  const favorites = await loadFavoritesForUser(user.uid); // [{ userId, concoursId, addedAt }]
+
+  if (favorites.length === 0) {
+    favorisListEl.innerHTML = "<p>Vous n’avez pas encore de concours en favoris.</p>";
+    return;
+  }
+
+  favorisListEl.innerHTML = "";
+
+  // Ici on suppose que tu as un tableau global window.concoursData
+  favorites.forEach(fav => {
+    const concours = (window.concoursData || []).find(c => c.id === fav.concoursId);
+    if (!concours) return;
+
+    const card = document.createElement("div");
+    card.className = "concours-card";
+    card.innerHTML = `
+      <h3>${concours.titre}</h3>
+      <p><strong>Gain :</strong> ${concours.typeGain}</p>
+      <p><strong>Fin :</strong> ${concours.dateFin}</p>
+      ${concours.url}Voir le concours</a>
+    `;
+    favorisListEl.appendChild(card);
+  });
+}
+
+
+
+
+async function initGainsPage(user) {
+  const gainsListEl = document.getElementById("gainsList");
+  if (!gainsListEl) return;
+
+  let currentStatus = "all";
+
+  async function render(statusFilter = "all") {
+    gainsListEl.innerHTML = "Chargement des gains...";
+
+    const gains = await loadGainsForUser(user.uid); // [{ concoursId, status, ... }]
+
+    const filtered = gains.filter(g =>
+      statusFilter === "all" ? true : g.status === statusFilter
+    );
+
+    if (filtered.length === 0) {
+      gainsListEl.innerHTML = "<p>Aucun gain pour ce statut.</p>";
+      return;
+    }
+
+    gainsListEl.innerHTML = "";
+    filtered.forEach(g => {
+      const concours = (window.concoursData || []).find(c => c.id === g.concoursId);
+      const title = concours ? concours.titre : g.concoursId;
+
+      const card = document.createElement("div");
+      card.className = "gain-card";
+      const label =
+        g.status === "won" ? "🎉 Gagné" :
+        g.status === "pending" ? "⏳ En attente" :
+        "❌ Perdu";
+
+      card.innerHTML = `
+        <div>
+          <strong>${title}</strong><br>
+          <span>${label}</span>
+        </div>
+      `;
+      gainsListEl.appendChild(card);
+    });
+  }
+
+  // Gestion des filtres boutons
+  document.querySelectorAll(".gains-filters .btn-chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".gains-filters .btn-chip").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      currentStatus = btn.getAttribute("data-status");
+      render(currentStatus);
+    });
+  });
+
+  // Premier affichage
+  render(currentStatus);
+}
+
+
+
+
+
+
+
+
+
+
 
