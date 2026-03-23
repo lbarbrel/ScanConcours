@@ -10,6 +10,19 @@ const admin = require("firebase-admin");
 const crypto = require("crypto");
 const path = require("path");
 
+const docData = {
+  titre,
+  url_officielle,
+  date_fin: dateFinText || null,
+  date_ajout: admin.firestore.FieldValue.serverTimestamp(),
+  source_nom: SOURCE_NOM,
+  source_url: SOURCE_URL,
+  type_gain: null,
+  type_concours: null,
+  no_purchase: titre.toLowerCase().includes("sans obligation d'achat") ? true : null
+  // plus tard : analyse du texte de la page de conditions si tu veux être plus précis
+};
+
 // Clé de service Firebase (JSON généré depuis la console Firebase)
 const serviceAccount = require(path.join(__dirname, "serviceAccountKey.json"));
 
@@ -105,4 +118,4 @@ async function main() {
 }
 
 main();
-``
+
