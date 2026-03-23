@@ -1,83 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ScanConcours – Trouvez et suivez vos concours</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
 
-<!-- HEADER --> 
-<header class="site-header">
-  <div class="container header-inner">
-    <a href="index.html" class="logo">ScanConcours</a>
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
 
-    <button class="nav-toggle" aria-label="Ouvrir le menu">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
+      <a href="index.html" class="logo">ScanConcours</a>
 
-    <nav class="nav" data-open="false">
-      index.htmlConcours</a>
-      favoris.htmlMes favoris</a>
-      gains.htmlMes gains</a>
-      login.htmlConnexion</a>
-      signup.htmlInscription</a>
-      <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
-      <button class="btn-fav" data-id="c1">☆</button>
-    </nav>
-  </div>
-</header>
+      <button class="nav-toggle" aria-label="Ouvrir le menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
 
+      <nav class="nav" data-open="false">
+        <a href="index.html">Concours</a>
+        <a href="favoris.html">Mes favoris</a>
+        <a href="gains.html">Mes gains</a>
+        <a href="login.html" id="nav-login">Connexion</a>
+        <a href="signup.html" id="nav-signup" class="nav-cta">Inscription</a>
+        <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
+      </nav>
 
-
-
-<!-- SDK Firebase (modules pour le navigateur) -->
-<script type="module"
-
-
-  
-  <section class="hero">
-    <div class="container">
-      <h2>L’assistant intelligent pour vos jeux concours 🎁</h2>
-      <p>Trouvez, participez, suivez vos gains automatiquement.</p>
-      <a href="#concours" class="btn-primary">Voir les concours disponibles</a>
     </div>
-  </section>
+  </header>
 
-  <section id="concours" class="section">
-    <div class="container">
-      <h2>Liste des concours</h2>
-      <p class="sub">Ces concours sont récupérés automatiquement via scraping.</p>
+  <main class="page">
+    <section class="section">
+      <div class="container">
 
-      <div id="filters" class="filters">
-        <input type="search" id="search" placeholder="Rechercher un concours...">
-        <select id="filterTypeGain">
-          <option value="">Tous les gains</option>
-          <option value="voyage">Voyage</option>
-          <option value="produits">Produits</option>
-          <option value="cash">Argent</option>
-        </select>
+        <h1>Concours disponibles</h1>
+        <p class="sub">Liste mise à jour automatiquement prochainement via votre scraper.</p>
 
-        <label class="date-label">Fin entre :
-          <input type="date" id="dateMin">
-        </label>
-        <span>et</span>
-        <input type="date" id="dateMax">
+        <div id="concoursList" class="concours-list"></div>
 
-        <label class="favorites-only">
-          <input type="checkbox" id="onlyFavs">
-          Favoris uniquement
-        </label>
       </div>
+    </section>
+  </main>
 
-      <div id="concoursList" class="concours-list"></div>
-    </div>
-  </section>
+  <script type="module" src="script.js"></script>
 
-  <footer class="footer">
-    <p>© 2026 ScanConcours — Votre assistant de jeux concours</p>
-  </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>
-
-
-
+``
