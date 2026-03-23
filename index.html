@@ -1,30 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>ScanConcours - Assistant Jeux Concours</title>
-  <meta name="description" content="Trouvez des jeux concours gratuits, participez rapidement et suivez vos gains automatiquement.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="style.css">
-</head>
 
-<body>
-  <header class="header">
-    <div class="container">
-      <h1 class="logo">ScanConcours</h1>
+<!-- HEADER --> 
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="index.html" class="logo">ScanConcours</a>
 
-      <nav>
-        <a href="#concours">Concours</a>
-        <a href="#about">À propos</a>
-        <a href="#login">Connexion</a>
-        <button id="logoutBtn" class="btn-logout" type="button">Déconnexion</button>
-      </nav>
-      
-      <div id="userStatus" class="user-status"></div>
-    </div>
-  </header>
+    <button class="nav-toggle" aria-label="Ouvrir le menu">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
 
+    <nav class="nav" data-open="false">
+      index.htmlConcours</a>
+      favoris.htmlMes favoris</a>
+      gains.htmlMes gains</a>
+      login.htmlConnexion</a>
+      signup.htmlInscription</a>
+      <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
+    </nav>
+  </div>
+</header>
 
 
 
@@ -78,57 +76,6 @@
   <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-<!-- SECTION CONNEXION -->
-<section id="login" class="section section-auth">
-  <div class="container auth-container">
-    <h2>Connexion</h2>
-    <p class="sub">Connectez-vous pour retrouver vos favoris et vos gains.</p>
-
-    <form id="loginForm" class="auth-form">
-      <div class="field">
-        <label for="loginEmail">Email</label>
-        <input type="email" id="loginEmail" required placeholder="vous@example.com">
-      </div>
-
-      <div class="field">
-        <label for="loginPassword">Mot de passe</label>
-        <input type="password" id="loginPassword" required placeholder="Votre mot de passe">
-      </div>
-
-      <button type="submit" class="btn-primary">Se connecter</button>
-      <p class="auth-message" id="loginMessage"></p>
-    </form>
-  </div>
-</section>
-
-<!-- SECTION INSCRIPTION -->
-<section id="signup" class="section section-auth">
-  <div class="container auth-container">
-    <h2>Créer un compte</h2>
-    <p class="sub">Un compte vous permet de synchroniser vos favoris et vos gains sur tous vos appareils.</p>
-
-    <form id="signupForm" class="auth-form">
-      <div class="field">
-        <label for="signupEmail">Email</label>
-        <input type="email" id="signupEmail" required placeholder="vous@example.com">
-      </div>
-
-      <div class="field">
-        <label for="signupPassword">Mot de passe</label>
-        <input type="password" id="signupPassword" required minlength="8" placeholder="Minimum 8 caractères">
-      </div>
-
-      <button type="submit" class="btn-primary">Créer mon compte</button>
-      <p class="auth-message" id="signupMessage"></p>
-    </form>
-  </div>
-</section>
-
 
 
 
