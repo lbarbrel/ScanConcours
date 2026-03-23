@@ -1,10 +1,10 @@
-# 🎁 ScanConcours
+# ScanConcours
 **L’assistant intelligent pour vos jeux concours**  
 Scraping, favoris, suivi automatique des gains (à venir)
 
 ---
 
-## 🚀 Présentation
+## Présentation
 ScanConcours est un outil conçu pour :
 
 - récupérer automatiquement les jeux concours disponibles en ligne  
@@ -17,4 +17,4 @@ HTML / CSS / JavaScript, moderne, responsive et extensible.
 
 ---
 
-## 📁 Structure du projet
+## Structure du projet
