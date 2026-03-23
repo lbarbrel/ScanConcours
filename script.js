@@ -1,5 +1,18 @@
 // script.js (version module ES)
 
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
 // 1) Import des fonctions Firebase (CDN modular)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
@@ -23,6 +36,56 @@ const firebaseConfig = {
 // 3) Initialisation Firebase et Auth
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+// -------------------------
+// FONCTIONS FAVORIS (Firestore)
+// -------------------------
+async function addFavoriteForUser(userUid, concoursId) {
+  await addDoc(collection(db, "favorites"), {
+    userId: userUid,
+    concoursId,
+    addedAt: serverTimestamp()
+  });
+}
+
+async function removeFavoriteForUser(userUid, concoursId) {
+  const q = query(
+    collection(db, "favorites"),
+    where("userId", "==", userUid),
+    where("concoursId", "==", concoursId)
+  );
+  const snap = await getDocs(q);
+  for (const docSnap of snap.docs) {
+    await deleteDoc(doc(db, "favorites", docSnap.id));
+  }
+}
+
+async function loadFavoritesForUser(userUid) {
+  const q = query(collection(db, "favorites"), where("userId", "==", userUid));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+// -------------------------
+// FONCTIONS GAINS (Firestore)
+// -------------------------
+async function addGainForUser(userUid, concoursId, status) {
+  await addDoc(collection(db, "gains"), {
+    userId: userUid,
+    concoursId,
+    status, // 'won', 'pending', 'lost'
+    detectedAt: serverTimestamp()
+  });
+}
+
+async function loadGainsForUser(userUid) {
+  const q = query(collection(db, "gains"), where("userId", "==", userUid));
+  const snap = await getDocs(q);
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
 
 // 4) Gestion de l’état de connexion pour le header
 const navLogin = document.getElementById('nav-login');
@@ -479,3 +542,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+
+
+onAuthStateChanged(auth, (user) => {
+  const path = window.location.pathname;
+
+  // Protection simple : si pas connecté, redirection vers login
+  if ((path.endsWith("favoris.html") || path.endsWith("gains.html")) && !user) {
+    window.location.href = "login.html";
+  }
+
+  // Tu peux aussi ici lancer le chargement des favoris/gains quand user est défini
+  if (user && path.endsWith("favoris.html")) {
+    initFavorisPage(user);
+  }
+
+  if (user && path.endsWith("gains.html")) {
+    initGainsPage(user);
+  }
+});
+
+function bindFavoriteButtons(user) {
+  document.querySelectorAll(".btn-fav").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const concoursId = btn.getAttribute("data-id");
+
+      if (!user) {
+        alert("Vous devez être connecté pour ajouter des favoris.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      const isActive = btn.classList.contains("active");
+
+      try {
+        if (isActive) {
+          await removeFavoriteForUser(user.uid, concoursId);
+        } else {
+          await addFavoriteForUser(user.uid, concoursId);
+        }
+        btn.classList.toggle("active");
+        btn.textContent = btn.classList.contains("active") ? "★" : "☆";
+      } catch (e) {
+        console.error(e);
+        alert("Erreur lors de la mise à jour du favori.");
+      }
+    });
+  });
+}
+
+
+
