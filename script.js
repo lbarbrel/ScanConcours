@@ -54,7 +54,27 @@ export const db = getFirestore(app);
 // Pas d’analytics sur GitHub Pages / site statique → on ne l’initialise pas
 console.log("Firebase initialisé ✔");
 
+const filterNoPurchaseEl = document.getElementById("filterNoPurchase");
 
+let allConcours = await loadConcoursFromFirestore();
+
+function renderList() {
+  let data = [...allConcours];
+
+  if (filterNoPurchaseEl && filterNoPurchaseEl.checked) {
+    data = data.filter(c => c.no_purchase === true);
+  }
+
+  // ... affichage des cartes comme avant
+}
+
+if (filterNoPurchaseEl) {
+  filterNoPurchaseEl.addEventListener("change", () => {
+    renderList();
+  });
+}
+
+renderList();
 
 // ========================
 // IMPORTS FIREBASE
