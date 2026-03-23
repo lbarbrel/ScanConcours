@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ScanConcours - Assistant Jeux Concours</title>
+  <meta name="description" content="Trouvez des jeux concours gratuits, participez rapidement et suivez vos gains automatiquement.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <h1 class="logo">ScanConcours</h1>
+
+      <nav>
+        <a href="#concours">Concours</a>
+        <a href="#about">À propos</a>
+        <a href="#login">Connexion</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h2>L’assistant intelligent pour vos jeux concours 🎁</h2>
+      <p>Trouvez, participez, suivez vos gains automatiquement.</p>
+      <a href="#concours" class="btn-primary">Voir les concours disponibles</a>
+    </div>
+  </section>
+
+  <section id="concours" class="section">
+    <div class="container">
+      <h2>Liste des concours</h2>
+      <p class="sub">Ces concours sont récupérés automatiquement via scraping.</p>
+
+      <div id="filters" class="filters">
+        <input type="search" id="search" placeholder="Rechercher un concours...">
+        <select id="filterTypeGain">
+          <option value="">Tous les gains</option>
+          <option value="voyage">Voyage</option>
+          <option value="produits">Produits</option>
+          <option value="cash">Argent</option>
+        </select>
+
+        <label class="date-label">Fin entre :
+          <input type="date" id="dateMin">
+        </label>
+        <span>et</span>
+        <input type="date" id="dateMax">
+
+        <label class="favorites-only">
+          <input type="checkbox" id="onlyFavs">
+          Favoris uniquement
+        </label>
+      </div>
+
+      <div id="concoursList" class="concours-list"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 ScanConcours — Votre assistant de jeux concours</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
