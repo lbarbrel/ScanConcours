@@ -258,3 +258,43 @@ if (token && email) {
     window.location.href = 'index.html';
   });
 }
+
+
+
+function renderFavorisPage() {
+  const favorisListEl = document.getElementById('favorisList');
+  if (!favorisListEl) return;
+
+  // récupère tes favoris depuis localStorage ou backend plus tard
+  const favoris = JSON.parse(localStorage.getItem('favoris') || '{}');
+  const ids = Object.keys(favoris);
+
+  if (ids.length === 0) {
+    favorisListEl.innerHTML = '<p>Vous n’avez pas encore de concours en favoris.</p>';
+    return;
+  }
+
+  favorisListEl.innerHTML = '';
+
+  // si tu as une liste globale concoursData :
+  ids.forEach(id => {
+    const concours = (window.concoursData || []).find(c => c.id === id);
+    if (!concours) return;
+
+    const card = document.createElement('div');
+    card.className = 'concours-card';
+    card.innerHTML = `
+      <h3>${concours.titre}</h3>
+      <p><strong>Gain :</strong> ${concours.typeGain}</p>
+      <p><strong>Fin :</strong> ${concours.dateFin}</p>
+      ${concours.url}Voir le concours</a>
+    `;
+    favorisListEl.appendChild(card);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderFavorisPage();
+});
+
+
