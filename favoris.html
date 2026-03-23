@@ -4,22 +4,47 @@
   <meta charset="UTF-8">
   <title>Mes favoris – ScanConcours</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  style.css
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+
   <!-- HEADER -->
-  <!-- colle ici le header moderne -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a href="index.html" class="logo">ScanConcours</a>
+
+      <button class="nav-toggle" aria-label="Ouvrir le menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="nav" data-open="false">
+        <a href="index.html">Concours</a>
+        <a href="favoris.html">Mes favoris</a>
+        <a href="gains.html">Mes gains</a>
+        <a href="login.html" id="nav-login">Connexion</a>
+        <a href="signup.html" id="nav-signup" class="nav-cta">Inscription</a>
+        <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
+      </nav>
+
+    </div>
+  </header>
 
   <main class="page">
     <section class="section">
       <div class="container">
         <h1>Mes favoris</h1>
-        <p class="sub">Vos concours enregistrés pour plus tard.</p>
+        <p class="sub">Tous les concours enregistrés pour plus tard.</p>
+
         <div id="favorisList" class="concours-list"></div>
       </div>
     </section>
   </main>
 
-  script.js
+  <script type="module" src="script.js"></script>
+
 </body>
 </html>
