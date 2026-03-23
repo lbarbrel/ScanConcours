@@ -1,3 +1,11 @@
+// --- AUTH STATE ---
+// Dans une vraie app, ce token viendra d'un backend (JWT stocké en cookie ou localStorage)
+let authToken = localStorage.getItem("scanconcours_token");
+let currentUser = authToken ? { email: localStorage.getItem("scanconcours_email") } : null;
+
+
+
+
 // Fake data – remplacée ensuite par votre backend
 const concoursData = [
   {
