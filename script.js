@@ -25,47 +25,36 @@ updateUserStatusUI();
 
 
 
-// --- FAKE API (pour tests sans backend) ---
-
-function fakeApiSignup(email, password) {
-  return new Promise((resolve, reject) => {
-    // Simu : on stocke un user dans localStorage (PEUT ÊTRE PROVISOIRE)
-    const usersRaw = localStorage.getItem("scanconcours_users") || "{}";
-    const users = JSON.parse(usersRaw);
-
-    if (users[email]) {
-      return reject(new Error("Cet email est déjà utilisé."));
+// ---  API  ---
+function apiSignup(email, password) {
+  return fetch("/api/auth/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, password })
+  }).then(async (res) => {
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.message || "Erreur lors de l'inscription.");
     }
-
-    // /!\\ Dans la vraie vie : mot de passe HASHÉ côté backend
-    users[email] = {
-      email,
-      password // uniquement pour la démo front, à NE PAS faire en prod
-    };
-
-    localStorage.setItem("scanconcours_users", JSON.stringify(users));
-
-    // génère un faux token
-    const fakeToken = "fake-token-" + Date.now();
-    resolve({ token: fakeToken, email });
+    return res.json(); // { token, user: { email, id, ... } }
   });
 }
 
-function fakeApiLogin(email, password) {
-  return new Promise((resolve, reject) => {
-    const usersRaw = localStorage.getItem("scanconcours_users") || "{}";
-    const users = JSON.parse(usersRaw);
-
-    if (!users[email]) {
-      return reject(new Error("Compte introuvable."));
+function apiLogin(email, password) {
+  return fetch("/api/auth/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ email, password })
+  }).then(async (res) => {
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.message || "Erreur lors de la connexion.");
     }
-
-    if (users[email].password !== password) {
-      return reject(new Error("Mot de passe incorrect."));
-    }
-
-    const fakeToken = "fake-token-" + Date.now();
-    resolve({ token: fakeToken, email });
+    return res.json();
   });
 }
 
