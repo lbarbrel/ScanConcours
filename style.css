@@ -1,0 +1,93 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: #f9fafb;
+  color: #1f2937;
+}
+
+.header {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.logo {
+  margin: 0;
+}
+
+nav a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: #4b5563;
+}
+
+nav a:hover {
+  color: black;
+}
+
+.hero {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: #facc15;
+  color: #1f2937;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  margin-top: 1rem;
+}
+
+.section {
+  padding: 2rem 1rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.concours-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.concours-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.concours-card h3 {
+  margin-top: 0;
+}
+
+.btn-fav {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.btn-fav.active {
+  color: #facc15;
+}
+
+.footer {
+  padding: 1rem;
+  text-align: center;
+  background: #111827;
+  color: white;
+}
