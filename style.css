@@ -71,14 +71,6 @@
   font-weight: 600;
 }
 
-
-
-
-
-
-
-
-
 body {
   font-family: system-ui, sans-serif;
   margin: 0;
@@ -98,17 +90,47 @@ body {
 }
 
 .logo {
-  margin: 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #111827;
+  text-decoration: none;
 }
 
-nav a {
-  margin-left: 1rem;
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav a {
   text-decoration: none;
   color: #4b5563;
+  font-size: 0.95rem;
 }
 
-nav a:hover {
-  color: black;
+.nav a:hover {
+  color: #111827;
+}
+
+.nav-cta {
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid #4f46e5;
+  color: #4f46e5;
+}
+
+.nav-cta:hover {
+  background: #4f46e5;
+  color: #ffffff;
+}
+
+.nav-logout {
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
 }
 
 .hero {
@@ -173,16 +195,6 @@ nav a:hover {
   color: white;
 }
 
-
-
-
-
-
-
-
-
-
-
 .section-auth {
   background: #f3f4f6;
 }
@@ -243,10 +255,21 @@ nav a:hover {
   color: #6b7280;
 }
 
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #ffffffcc;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e7eb;
+}
 
-
-
-
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
 
 .btn-logout {
   margin-left: 1rem;
@@ -256,4 +279,45 @@ nav a:hover {
   border: 1px solid #d1d5db;
   background: #ffffff;
   cursor: pointer;
+}
+
+/* Burger mobile */
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 0.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  width: 20px;
+  height: 2px;
+  background: #111827;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    position: absolute;
+    inset: 60px 1rem auto 1rem;
+    background: #ffffff;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+    display: none;
+  }
+
+  .nav[data-open="true"] {
+    display: flex;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
 }
