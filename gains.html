@@ -6,27 +6,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   style.css
 </head>
+
 <body>
+
   <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+
+      index.htmlScanConcours</a>
+
+      <button class="nav-toggle" aria-label="Ouvrir le menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="nav" data-open="false">
+        index.htmlConcours</a>
+        favoris.htmlMes favoris</a>
+        gains.htmlMes gains</a>
+        login.htmlConnexion</a>
+        signup.htmlInscription</a>
+        <button type="button" id="nav-logout" class="nav-logout" hidden>Déconnexion</button>
+      </nav>
+
+    </div>
+  </header>
 
   <main class="page">
     <section class="section">
       <div class="container">
+
         <h1>Mes gains</h1>
-        <p class="sub">Suivez l’état de vos participations : gagné, en attente, perdu.</p>
+        <p class="sub">Suivez vos résultats : gagnés, en attente ou perdus.</p>
 
         <div class="gains-filters">
-          <button data-status="all" class="btn-chip active">Tous</button>
-          <button data-status="won" class="btn-chip">🎉 Gagné</button>
-          <button data-status="pending" class="btn-chip">⏳ En attente</button>
-          <button data-status="lost" class="btn-chip">❌ Perdu</button>
+          <button class="btn-chip active" data-status="all">Tous</button>
+          <button class="btn-chip" data-status="won">🎉 Gagné</button>
+          <button class="btn-chip" data-status="pending">⏳ En attente</button>
+          <button class="btn-chip" data-status="lost">❌ Perdu</button>
         </div>
 
         <div id="gainsList" class="gains-list"></div>
+
       </div>
     </section>
   </main>
 
-  script.js
+  script.js</script>
+
 </body>
 </html>
