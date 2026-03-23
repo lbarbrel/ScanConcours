@@ -1,3 +1,136 @@
+// script.js (version module ES)
+
+// 1) Import des fonctions Firebase (CDN modular)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+// 2) Ta configuration Firebase (copie-colle celle de la console)
+const firebaseConfig = {
+  apiKey: "API_KEY_ICI",
+  authDomain: "scanconcours.firebaseapp.com",
+  projectId: "scanconcours",
+  storageBucket: "scanconcours.appspot.com",
+  messagingSenderId: "XXXXXXXXXX",
+  appId: "1:XXXXXXXXXX:web:XXXXXXXXXX"
+};
+
+// 3) Initialisation Firebase et Auth
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// 4) Gestion de l’état de connexion pour le header
+const navLogin = document.getElementById('nav-login');
+const navSignup = document.getElementById('nav-signup');
+const navLogout = document.getElementById('nav-logout');
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // Utilisateur connecté
+    if (navLogin) navLogin.hidden = true;
+    if (navSignup) navSignup.hidden = true;
+    if (navLogout) navLogout.hidden = false;
+  } else {
+    // Utilisateur déconnecté
+    if (navLogin) navLogin.hidden = false;
+    if (navSignup) navSignup.hidden = false;
+    if (navLogout) navLogout.hidden = true;
+  }
+});
+
+if (navLogout) {
+  navLogout.addEventListener('click', () => {
+    signOut(auth).then(() => {
+      window.location.href = "index.html";
+    });
+  });
+}
+
+// 5) Gestion du formulaire d’inscription (signup.html)
+const signupForm = document.getElementById("signupForm");
+const signupMessage = document.getElementById("signupMessage");
+
+if (signupForm) {
+  signupForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    signupMessage.textContent = "";
+    signupMessage.className = "auth-message";
+
+    const email = document.getElementById("signupEmail").value.trim();
+    const password = document.getElementById("signupPassword").value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+        signupMessage.textContent = "Compte créé avec succès ✅";
+        signupMessage.classList.add("success");
+        // Redirection (optionnelle) vers la page d’accueil ou mes favoris
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1000);
+      })
+      .catch((error) => {
+        let msg = "Erreur lors de l'inscription.";
+        if (error.code === "auth/email-already-in-use") msg = "Cet email est déjà utilisé.";
+        if (error.code === "auth/weak-password") msg = "Mot de passe trop faible (min 6 caractères).";
+        signupMessage.textContent = msg;
+        signupMessage.classList.add("error");
+      });
+  });
+}
+
+// 6) Gestion du formulaire de connexion (login.html)
+const loginForm = document.getElementById("loginForm");
+const loginMessage = document.getElementById("loginMessage");
+
+if (loginForm) {
+  loginForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    loginMessage.textContent = "";
+    loginMessage.className = "auth-message";
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+        loginMessage.textContent = "Connexion réussie ✅";
+        loginMessage.classList.add("success");
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 800);
+      })
+      .catch((error) => {
+        let msg = "Erreur de connexion.";
+        if (error.code === "auth/user-not-found") msg = "Aucun compte trouvé avec cet email.";
+        if (error.code === "auth/wrong-password") msg = "Mot de passe incorrect.";
+        loginMessage.textContent = msg;
+        loginMessage.classList.add("error");
+      });
+  });
+}
+
+// 7) (Optionnel) utiliser l’utilisateur sur les autres pages
+// Exemple : protéger accès à favoris/gains
+if (window.location.pathname.endsWith("favoris.html") ||
+    window.location.pathname.endsWith("gains.html")) {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Si pas connecté → redirection vers la page de login
+      window.location.href = "login.html";
+    }
+  });
+}
+
+// 8) Tu peux garder ici ton ancien code pour la liste des concours, favoris, gains, etc.
+// Il continuera de marcher, et tu pourras plus tard lier les données à l’utilisateur Firebase (user.uid).
+``
+
+
 // --- AUTH STATE ---
 // Dans une vraie app, ce token viendra d'un backend (JWT stocké en cookie ou localStorage)
 let authToken = localStorage.getItem("scanconcours_token");
