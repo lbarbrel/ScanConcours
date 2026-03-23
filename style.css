@@ -161,3 +161,18 @@ nav a:hover {
   font-size: 0.85rem;
   color: #6b7280;
 }
+
+
+
+
+
+
+.btn-logout {
+  margin-left: 1rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+}
