@@ -224,3 +224,37 @@ if (logoutBtn) {
     updateUserStatusUI();
   });
 }
+
+
+
+// --- HEADER : menu mobile ---
+const nav = document.querySelector('.nav');
+const navToggle = document.querySelector('.nav-toggle');
+
+if (nav && navToggle) {
+  navToggle.addEventListener('click', () => {
+    const open = nav.getAttribute('data-open') === 'true';
+    nav.setAttribute('data-open', String(!open));
+  });
+}
+
+// --- HEADER : affichage connecté / déconnecté ---
+const navLogin = document.getElementById('nav-login');
+const navSignup = document.getElementById('nav-signup');
+const navLogout = document.getElementById('nav-logout');
+
+const token = localStorage.getItem('scanconcours_token');
+const email = localStorage.getItem('scanconcours_email');
+
+if (token && email) {
+  if (navLogin) navLogin.hidden = true;
+  if (navSignup) navSignup.hidden = true;
+  if (navLogout) navLogout.hidden = false;
+
+  navLogout.addEventListener('click', () => {
+    localStorage.removeItem('scanconcours_token');
+    localStorage.removeItem('scanconcours_email');
+    // plus tard : appeler /api/auth/logout si tu en fais un
+    window.location.href = 'index.html';
+  });
+}
