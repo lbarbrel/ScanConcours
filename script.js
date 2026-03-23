@@ -297,4 +297,52 @@ document.addEventListener('DOMContentLoaded', () => {
   renderFavorisPage();
 });
 
+const demoGains = [
+  { id: 1, concoursTitre: 'Voyage à New York', status: 'won' },
+  { id: 2, concoursTitre: 'Coffret beauté', status: 'pending' },
+  { id: 3, concoursTitre: 'Bons d’achats 50€', status: 'lost' }
+];
 
+function renderGains(filterStatus = 'all') {
+  const gainsListEl = document.getElementById('gainsList');
+  if (!gainsListEl) return;
+
+  const gains = demoGains.filter(g =>
+    filterStatus === 'all' ? true : g.status === filterStatus
+  );
+
+  if (gains.length === 0) {
+    gainsListEl.innerHTML = '<p>Aucun gain pour ce statut.</p>';
+    return;
+  }
+
+  gainsListEl.innerHTML = '';
+
+  gains.forEach(g => {
+    const card = document.createElement('div');
+    card.className = 'gain-card';
+    card.innerHTML = `
+      <div>
+        <strong>${g.concoursTitre}</strong><br>
+        <span>${g.status === 'won' ? '🎉 Gagné' : g.status === 'pending' ? '⏳ En attente' : '❌ Perdu'}</span>
+      </div>
+    `;
+    gainsListEl.appendChild(card);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const gainsListEl = document.getElementById('gainsList');
+  if (!gainsListEl) return; // on n’est pas sur la page gains
+
+  renderGains();
+
+  document.querySelectorAll('.gains-filters .btn-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.gains-filters .btn-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const status = btn.getAttribute('data-status');
+      renderGains(status);
+    });
+  });
+});
