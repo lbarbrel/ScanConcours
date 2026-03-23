@@ -1,0 +1,34 @@
+name: Scraper concours Firestore
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"  # Toutes les 6h
+  workflow_dispatch:        # Permet aussi de le lancer à la main
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Créer le fichier serviceAccountKey.json depuis le secret
+        working-directory: scraper
+        run: |
+          echo "$FIREBASE_SERVICE_ACCOUNT" > serviceAccountKey.json
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Installer les dépendances du scraper
+        working-directory: scraper
+        run: npm install
+
+      - name: Lancer le scraper
+        working-directory: scraper
+        run: npm start
