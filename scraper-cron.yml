@@ -2,18 +2,18 @@ name: Scraper concours Firestore
 
 on:
   schedule:
-    - cron: "0 */6 * * *"  # Toutes les 6h
-  workflow_dispatch:        # Permet aussi de le lancer à la main
+    - cron: "0 */6 * * *"  # Toutes les 6 heures
+  workflow_dispatch:        # Permet aussi de lancer le job manuellement depuis l'onglet Actions
 
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout du dépôt
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Installation de Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
