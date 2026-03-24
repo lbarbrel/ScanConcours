@@ -137,3 +137,11 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Node / npm
+node_modules/
+npm-debug.log*
+yarn.lock
+
+# Clé de service Firebase Admin
+scraper/serviceAccountKey.json
